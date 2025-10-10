@@ -1,0 +1,247 @@
+/* ==========================
+   General Reset
+========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ==========================
+   Navbar
+========================== */
+.navbar {
+  display: flex;
+  justify-content: center; /* centers nav items */
+  align-items: center;
+  background: linear-gradient(90deg, #00416a, #e4e5e6);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(6px); /* subtle blur for modern look */
+}
+
+.logo {
+  position: absolute; /* keeps logo fixed to left */
+  left: 2rem;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 3rem; /* increased space between items */
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem; /* slightly larger font */
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #ffd700;
+  transform: scale(1.05);
+}
+
+/* ==========================
+   Hero Section
+========================== */
+.hero-section {
+  background: linear-gradient(to right, #005c97, #363795);
+  color: white;
+  text-align: center;
+  padding: 6rem 2rem;
+}
+
+.hero-section h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.cta-btn {
+  background-color: #ffd700;
+  color: #333;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.cta-btn:hover {
+  background-color: #ffcc00;
+  transform: scale(1.05);
+}
+
+/* ==========================
+   Sections
+========================== */
+.section {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.section h2 {
+  color: #00416a;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.section p {
+  color: #444;
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ==========================
+   Login Section
+========================== */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 350px;
+  margin: 2rem auto;
+}
+
+.login-form input {
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.login-form button {
+  padding: 0.8rem;
+  border: none;
+  background-color: #00416a;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.login-form button:hover {
+  background-color: #005c97;
+  transform: scale(1.03);
+}
+
+/* ==========================
+   Footer
+========================== */
+footer {
+  background: #00416a;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+}
+/* ==========================
+   Resources Page
+========================== */
+.resources-section {
+  padding: 4rem 2rem;
+  text-align: center;
+  background-color: #f9fbfd;
+}
+
+.resources-section h2 {
+  color: #00416a;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.resources-section p {
+  font-size: 1.1rem;
+  color: #444;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+}
+
+/* Video Gallery */
+.video-gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.video-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 320px;
+  overflow: hidden;
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.video-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.video-card p {
+  padding: 1rem;
+  font-weight: 500;
+  color: #00416a;
+}
+
+/* Articles */
+.article-section {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.article-section h3 {
+  color: #00416a;
+  margin-bottom: 1rem;
+}
+
+.article-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.article-section li {
+  margin: 0.8rem 0;
+}
+
+.article-section a {
+  color: #005c97;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.article-section a:hover {
+  text-decoration: underline;
+}
