@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinWise - Resources</title>
+  <title>FinWise | Resources</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,49 +12,112 @@
       <div class="logo">FinWise</div>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
+        <li><a href="#">Login</a></li>
         <li><a href="news.html">News</a></li>
-        <li><a href="resources.html" class="active">Resources</a></li>
-        <li><a href="login.html">Login</a></li>
+        <li class="dropdown">
+          <a href="resources.html" class="active-link">Resources</a>
+          <div class="dropdown-menu">
+            <a href="resources.html#videos">Video Tutorials</a>
+            <a href="resources.html#articles">Articles</a>
+            <a href="resources.html#courses">Online Courses</a>
+            <a href="resources.html#tools">Financial Tools</a>
+          </div>
+        </li>
       </ul>
     </nav>
   </header>
 
-  <section class="section">
-    <h2>Financial Literacy Resources</h2>
-    <p>Explore these curated videos and articles to enhance your understanding of personal finance and smart money management.</p>
+  <main class="page active">
+    <h2>Financial Learning Resources</h2>
 
-    <div class="video-grid">
-      <div class="video-card">
-        <a href="https://youtu.be/CHkhGF0KtIg" target="_blank">
-          <img src="https://img.youtube.com/vi/CHkhGF0KtIg/0.jpg" alt="Video 1">
-          <p>Basics of Financial Literacy</p>
-        </a>
+    <!-- Video Tutorials Section -->
+    <section id="videos" class="resource-section">
+      <h3>📹 Video Tutorials</h3>
+      <div class="resources-container">
+        <div class="video-wrapper">
+          <iframe width="350" height="200" src="https://www.youtube.com/embed/aRcXutXvfmM" allowfullscreen></iframe>
+          <p class="video-title">Introduction to Personal Finance for Kids</p>
+        </div>
+        <div class="video-wrapper">
+          <iframe width="350" height="200" src="https://www.youtube.com/embed/ouvbeb2wSGA" allowfullscreen></iframe>
+          <p class="video-title">Investment Basics 101</p>
+        </div>
+        <div class="video-wrapper">
+          <iframe width="350" height="200" src="https://www.youtube.com/embed/MoFj7meoHkY" allowfullscreen></iframe>
+          <p class="video-title">How to Budget Effectively</p>
+        </div>
       </div>
-      <div class="video-card">
-        <a href="https://youtu.be/ouvbeb2wSGA" target="_blank">
-          <img src="https://img.youtube.com/vi/ouvbeb2wSGA/0.jpg" alt="Video 2">
-          <p>Money Management Tips</p>
-        </a>
-      </div>
-      <div class="video-card">
-        <a href="https://youtu.be/MoFj7meoHkY" target="_blank">
-          <img src="https://img.youtube.com/vi/MoFj7meoHkY/0.jpg" alt="Video 3">
-          <p>Investing for Beginners</p>
-        </a>
-      </div>
-    </div>
+    </section>
 
-    <div class="article-section">
-      <h3>Recommended Articles</h3>
-      <ul>
-        <li><a href="https://www.investopedia.com/terms/f/financial-literacy.asp" target="_blank">What is Financial Literacy - Investopedia</a></li>
-        <li><a href="https://www.cambridge.org/core/journals/journal-of-financial-literacy-and-wellbeing/article/importance-of-financial-literacy-and-its-impact-on-financial-wellbeing/A5DBBF9D6F0696E5FD3733241EE28E66" target="_blank">The Importance of Financial Literacy - Cambridge Journal</a></li>
-      </ul>
-    </div>
-  </section>
+    <!-- Articles Section -->
+    <section id="articles" class="resource-section">
+      <h3>📰 Featured Articles</h3>
+      <div class="articles">
+        <a href="https://www.investopedia.com/terms/f/financial-literacy.asp" target="_blank">📖 Investopedia: Financial Literacy</a>
+        <a href="https://www.cambridge.org/core/journals/journal-of-financial-literacy-and-wellbeing/article/importance-of-financial-literacy-and-its-impact-on-financial-wellbeing/A5DBBF9D6F0696E5FD3733241EE28E66" target="_blank">📚 Cambridge Journal Article</a>
+        <a href="https://www.investopedia.com/terms/b/budgeting.asp" target="_blank">💰 The Complete Guide to Budgeting</a>
+        <a href="https://www.investopedia.com/terms/s/stock.asp" target="_blank">📈 Understanding Stocks and Markets</a>
+      </div>
+    </section>
+
+    <!-- Online Courses Section -->
+    <section id="courses" class="resource-section">
+      <h3>🎓 Online Courses</h3>
+      <div class="courses-container">
+        <div class="course-card">
+          <h4>Personal Finance Fundamentals</h4>
+          <p>Learn the basics of managing money, budgeting, and saving strategies.</p>
+          <a href="#" class="course-btn">Explore Course</a>
+        </div>
+        <div class="course-card">
+          <h4>Stock Market Investing</h4>
+          <p>Master the techniques of stock selection and portfolio building.</p>
+          <a href="#" class="course-btn">Explore Course</a>
+        </div>
+        <div class="course-card">
+          <h4>Crypto & Digital Assets</h4>
+          <p>Understand cryptocurrency, blockchain, and digital investment options.</p>
+          <a href="#" class="course-btn">Explore Course</a>
+        </div>
+        <div class="course-card">
+          <h4>Retirement Planning</h4>
+          <p>Plan your financial future and retirement with expert guidance.</p>
+          <a href="#" class="course-btn">Explore Course</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Financial Tools Section -->
+    <section id="tools" class="resource-section">
+      <h3>🛠️ Financial Tools</h3>
+      <div class="tools-container">
+        <div class="tool-card">
+          <h4>💵 Budget Calculator</h4>
+          <p>Plan and track your monthly expenses efficiently.</p>
+          <button class="tool-btn">Launch Tool</button>
+        </div>
+        <div class="tool-card">
+          <h4>📊 Investment Calculator</h4>
+          <p>Calculate potential returns on your investments.</p>
+          <button class="tool-btn">Launch Tool</button>
+        </div>
+        <div class="tool-card">
+          <h4>🎯 Financial Goal Planner</h4>
+          <p>Set and track your financial goals with ease.</p>
+          <button class="tool-btn">Launch Tool</button>
+        </div>
+        <div class="tool-card">
+          <h4>💳 Debt Calculator</h4>
+          <p>Manage and plan your debt repayment strategy.</p>
+          <button class="tool-btn">Launch Tool</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <footer>
-    <p>© 2025 FinWise | Empowering Financial Awareness</p>
+    <p>&copy; 2024 FinWise. All rights reserved. | Your Financial Literacy Partner</p>
   </footer>
 
   <script src="script.js"></script>

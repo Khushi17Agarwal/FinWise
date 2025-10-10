@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FinWise</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinWise | News</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
     <nav class="navbar">
       <div class="logo">FinWise</div>
       <ul class="nav-links">
-        <li><a href="index.html" class="active-link">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="#">Login</a></li>
-        <li><a href="news.html">News</a></li>
+        <li><a href="news.html" class="active-link">News</a></li>
         <li class="dropdown">
           <a href="resources.html">Resources</a>
           <div class="dropdown-menu">
@@ -27,16 +27,15 @@
     </nav>
   </header>
 
-  <main id="home" class="page active">
-    <h1>Welcome to FinWise</h1>
-    <p>Your trusted guide to Financial Literacy.</p>
-    <p style="margin-top: 2rem; color: #666;">Learn the fundamentals of personal finance, investment strategies, and smart money management.</p>
+  <main class="page active">
+    <h2>Latest Financial News</h2>
+    <div class="news-container" id="news-container"></div>
   </main>
 
   <footer>
     <p>&copy; 2024 FinWise. All rights reserved. | Your Financial Literacy Partner</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="news.js"></script>
 </body>
 </html>
