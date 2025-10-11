@@ -562,6 +562,58 @@ footer {
     flex: 0 0 250px;
   }
 
+/* ... (existing styles) ... */
+
+.news-content {
+  padding: 1rem;
+  text-align: left;
+}
+
+.news-content h3 {
+  font-size: 1.05rem;
+  color: #00416a;
+  margin-bottom: 0.5rem;
+}
+
+.news-content p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.8rem;
+}
+
+/* Original link style (kept for existing links if any) */
+.news-content a {
+  text-decoration: none;
+  color: #0077b6;
+  font-weight: 600;
+  transition: color 0.3s;
+  display: inline-block; /* Added to allow padding/margin for links */
+}
+
+.news-content a:hover {
+  color: #ffb703;
+}
+
+/* New style for Read More button */
+.read-more-btn {
+  background-color: #0077b6;
+  color: white !important; /* Override the color from .news-content a */
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.read-more-btn:hover {
+  background-color: #00416a;
+  color: white !important;
+}
+
+/* ... (rest of the existing styles) ... */
+  
   .resource-section h3 {
     font-size: 1.2rem;
   }
