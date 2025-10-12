@@ -120,6 +120,98 @@
     <p>&copy; 2024 FinWise. All rights reserved. | Your Financial Literacy Partner</p>
   </footer>
 
+  <!-- Budget Calculator Modal -->
+  <div id="budgetModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>💵 Budget Calculator</h3>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="calculator-section">
+          <h4>Monthly Income</h4>
+          <input type="number" id="monthlyIncome" placeholder="Enter monthly income" />
+        </div>
+        <div class="calculator-section">
+          <h4>Monthly Expenses</h4>
+          <div class="expense-inputs">
+            <input type="number" id="housing" placeholder="Housing/Rent" />
+            <input type="number" id="utilities" placeholder="Utilities" />
+            <input type="number" id="groceries" placeholder="Groceries" />
+            <input type="number" id="transportation" placeholder="Transportation" />
+            <input type="number" id="entertainment" placeholder="Entertainment" />
+            <input type="number" id="other" placeholder="Other Expenses" />
+          </div>
+        </div>
+        <button id="calculateBudget" class="calculate-btn">Calculate Budget</button>
+        <div id="budgetResults" class="results"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Investment Calculator Modal -->
+  <div id="investmentModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📊 Investment Calculator</h3>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="calculator-section">
+          <h4>Investment Details</h4>
+          <input type="number" id="initialAmount" placeholder="Initial Investment Amount" />
+          <input type="number" id="monthlyContribution" placeholder="Monthly Contribution" />
+          <input type="number" id="annualReturn" placeholder="Expected Annual Return (%)" />
+          <input type="number" id="investmentYears" placeholder="Investment Period (Years)" />
+        </div>
+        <button id="calculateInvestment" class="calculate-btn">Calculate Investment</button>
+        <div id="investmentResults" class="results"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Financial Goal Planner Modal -->
+  <div id="goalModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🎯 Financial Goal Planner</h3>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="calculator-section">
+          <h4>Goal Details</h4>
+          <input type="text" id="goalName" placeholder="Goal Name (e.g., Emergency Fund)" />
+          <input type="number" id="goalAmount" placeholder="Target Amount" />
+          <input type="number" id="currentSavings" placeholder="Current Savings" />
+          <input type="number" id="monthlySaving" placeholder="Monthly Saving Amount" />
+          <input type="number" id="goalYears" placeholder="Target Timeline (Years)" />
+        </div>
+        <button id="calculateGoal" class="calculate-btn">Calculate Goal Plan</button>
+        <div id="goalResults" class="results"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Debt Calculator Modal -->
+  <div id="debtModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>💳 Debt Calculator</h3>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="calculator-section">
+          <h4>Debt Details</h4>
+          <input type="number" id="debtAmount" placeholder="Total Debt Amount" />
+          <input type="number" id="interestRate" placeholder="Interest Rate (%)" />
+          <input type="number" id="monthlyPayment" placeholder="Monthly Payment Amount" />
+        </div>
+        <button id="calculateDebt" class="calculate-btn">Calculate Debt Plan</button>
+        <div id="debtResults" class="results"></div>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
