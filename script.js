@@ -92,7 +92,7 @@ if (loginForm) {
   toolBtns.forEach((btn) => {
     btn.addEventListener("click", function () {
       const titleEl = this.closest(".tool-card").querySelector("h4");
-      const titleText = titleEl ? titleEl.textContent.replace(/^\p{Emoji_Presentation}*/u, "").trim() : "Tool";
+      const titleText = titleEl ? titleEl.textContent.trim() : "Tool";
       const toolKey = getToolKeyFromTitle(titleText);
       openToolModal(toolKey, titleText);
     });
