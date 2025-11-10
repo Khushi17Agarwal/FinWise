@@ -117,7 +117,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2024 FinWise. All rights reserved. | Your Financial Literacy Partner</p>
+    <p>&copy; 2025 FinWise. All rights reserved. | Your Financial Literacy Partner</p>
   </footer>
 
   <!-- Budget Calculator Modal -->
@@ -208,6 +208,123 @@
         </div>
         <button id="calculateDebt" class="calculate-btn">Calculate Debt Plan</button>
         <div id="debtResults" class="results"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🔐 Login to FinWise</h3>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="loginForm" class="auth-form">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" required placeholder="Enter your email" />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" required placeholder="Enter your password" />
+          </div>
+          <div class="form-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="rememberMe" />
+              <span class="checkmark"></span>
+              Remember me
+            </label>
+            <a href="#" class="forgot-password">Forgot Password?</a>
+          </div>
+          <button type="submit" class="auth-btn">Login</button>
+          <div class="auth-switch">
+            <p>Don't have an account? <a href="#" id="showSignup">Sign up here</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📝 Create Account</h3>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="signupForm" class="auth-form">
+          <div class="form-group">
+            <label for="signupName">Full Name</label>
+            <input type="text" id="signupName" required placeholder="Enter your full name" />
+          </div>
+          <div class="form-group">
+            <label for="signupEmail">Email Address</label>
+            <input type="email" id="signupEmail" required placeholder="Enter your email" />
+          </div>
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" required placeholder="Create a password" />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" required placeholder="Confirm your password" />
+          </div>
+          <div class="form-group">
+            <label for="ageRange">Age Range</label>
+            <select id="ageRange" required>
+              <option value="">Select your age range</option>
+              <option value="13-17">13-17</option>
+              <option value="18-25">18-25</option>
+              <option value="26-35">26-35</option>
+              <option value="36-50">36-50</option>
+              <option value="51+">51+</option>
+            </select>
+          </div>
+          <div class="form-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="agreeTerms" required />
+              <span class="checkmark"></span>
+              I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>
+            </label>
+          </div>
+          <button type="submit" class="auth-btn">Create Account</button>
+          <div class="auth-switch">
+            <p>Already have an account? <a href="#" id="showLogin">Login here</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chatbot Widget -->
+  <div id="chatbotWidget" class="chatbot-widget">
+    <div class="chatbot-toggle" id="chatbotToggle">
+      <span class="chatbot-icon">💬</span>
+      <span class="chatbot-text">Ask FinWise</span>
+    </div>
+    <div class="chatbot-container" id="chatbotContainer">
+      <div class="chatbot-header">
+        <h4>FinWise Assistant</h4>
+        <button class="chatbot-close" id="chatbotClose">&times;</button>
+      </div>
+      <div class="chatbot-messages" id="chatbotMessages">
+        <div class="chatbot-message bot-message">
+          <p>Hi! I'm your FinWise assistant. I can help you with:</p>
+          <ul>
+            <li>💰 Budget planning</li>
+            <li>📈 Investment advice</li>
+            <li>🎯 Financial goal setting</li>
+            <li>💳 Debt management</li>
+            <li>📚 Financial literacy questions</li>
+          </ul>
+          <p>What would you like to know?</p>
+        </div>
+      </div>
+      <div class="chatbot-input">
+        <input type="text" id="chatbotInput" placeholder="Ask me anything about finance..." />
+        <button id="chatbotSend">Send</button>
       </div>
     </div>
   </div>
