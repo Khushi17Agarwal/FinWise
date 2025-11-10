@@ -39,21 +39,39 @@ document.addEventListener("DOMContentLoaded", function() {
       e.preventDefault();
       const email = document.getElementById("loginEmail").value;
       const password = document.getElementById("loginPassword").value;
-      
-      if (email && password) {
-        // Simulate login process
-        const loginBtn = this.querySelector(".auth-btn");
-        loginBtn.textContent = "Logging in...";
-        loginBtn.disabled = true;
-        
-        setTimeout(() => {
-          alert("Welcome back to FinWise! 🎉");
+
+      if (!email || !password) return;
+
+      const loginBtn = this.querySelector(".auth-btn");
+      loginBtn.textContent = "Logging in...";
+      loginBtn.disabled = true;
+
+      fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      })
+        .then(async (res) => {
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || !data.ok) {
+            const msg = data.message || "Login failed";
+            throw new Error(msg);
+          }
+          // Persist minimal session indicator
+          try {
+            localStorage.setItem("finwiseUser", JSON.stringify(data.user));
+          } catch (_) {}
           document.getElementById("loginModal").style.display = "none";
+          // Redirect to home page
+          window.location.href = "index.html";
+        })
+        .catch((err) => {
+          alert(err.message || "Unable to login. Please try again.");
+        })
+        .finally(() => {
           loginBtn.textContent = "Login";
           loginBtn.disabled = false;
-          loginForm.reset();
-        }, 1500);
-      }
+        });
     });
   }
 
@@ -78,21 +96,39 @@ document.addEventListener("DOMContentLoaded", function() {
         alert("Please agree to the Terms of Service and Privacy Policy.");
         return;
       }
-      
-      if (name && email && password && ageRange) {
-        // Simulate signup process
-        const signupBtn = this.querySelector(".auth-btn");
-        signupBtn.textContent = "Creating Account...";
-        signupBtn.disabled = true;
-        
-        setTimeout(() => {
+
+      if (!(name && email && password && ageRange)) return;
+
+      const signupBtn = this.querySelector(".auth-btn");
+      signupBtn.textContent = "Creating Account...";
+      signupBtn.disabled = true;
+
+      fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password })
+      })
+        .then(async (res) => {
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || !data.ok) {
+            const msg = data.message || "Signup failed";
+            throw new Error(msg);
+          }
           alert(`Welcome to FinWise, ${name}! 🎉 Your account has been created successfully.`);
           document.getElementById("signupModal").style.display = "none";
+          // Optionally auto-fill login email
+          const loginEmail = document.getElementById("loginEmail");
+          if (loginEmail) loginEmail.value = email;
+          // Show login modal
+          document.getElementById("loginModal").style.display = "block";
+        })
+        .catch((err) => {
+          alert(err.message || "Unable to sign up. Please try again.");
+        })
+        .finally(() => {
           signupBtn.textContent = "Create Account";
           signupBtn.disabled = false;
-          signupForm.reset();
-        }, 2000);
-      }
+        });
     });
   }
 
