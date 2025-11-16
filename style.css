@@ -22,10 +22,10 @@ main {
 /* 🌟 Navbar */
 .navbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background: linear-gradient(90deg, #00416a, #e4e5e6);
-  padding: 1rem 2rem;
+  padding: 1rem 1.25rem;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -33,8 +33,7 @@ main {
 }
 
 .logo {
-  position: absolute;
-  left: 40px;
+  position: static;
   color: white;
   font-size: 1.6rem;
   font-weight: 700;
@@ -44,7 +43,9 @@ main {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 2.5rem;
+  gap: 1.25rem;
+  flex: 1;
+  justify-content: center;
 }
 
 .nav-links a {
@@ -62,19 +63,18 @@ main {
 
 /* 👤 User Section in Navbar */
 .user-section {
-  position: absolute;
-  right: 40px;
+  position: static;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem;
   z-index: 10;
 }
 
 .user-name {
   color: white;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1.5rem;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
   border-radius: 25px;
   display: flex;
@@ -86,7 +86,7 @@ main {
 
 .user-name::before {
   content: "👤";
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .logout-btn {
@@ -529,8 +529,8 @@ footer {
   }
 
   .user-name {
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.2rem;
     white-space: nowrap;
   }
 
@@ -611,8 +611,8 @@ footer {
   }
 
   .user-name {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    padding: 0.4rem 1rem;
   }
 
   .logout-btn {
@@ -1501,5 +1501,69 @@ footer {
   
   .event-data {
     gap: 0.8rem;
+  }
+}
+/* Responsive overrides */
+.dropdown:focus-within .dropdown-menu {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+  .logo {
+    position: static;
+    left: auto;
+    margin-bottom: 0.5rem;
+  }
+  .nav-links {
+    flex-wrap: nowrap;
+    gap: 0.8rem;
+    justify-content: center;
+  }
+  .user-section {
+    position: static;
+    right: auto;
+    width: auto;
+    justify-content: flex-end;
+    margin-top: 0;
+  }
+  .news-container {
+    padding: 1rem;
+    flex-direction: column;
+    overflow-x: visible;
+  }
+  .news-card {
+    width: 100%;
+    max-width: 500px;
+    align-self: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links {
+    gap: 0.6rem;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+  .user-section {
+    position: static;
+    right: auto;
+    width: auto;
+    justify-content: flex-end;
+  }
+  .news-container {
+    padding: 0.75rem;
+    flex-direction: column;
+  }
+  .news-card {
+    width: 100%;
+    max-width: 450px;
+    align-self: center;
   }
 }
