@@ -60,6 +60,56 @@ main {
   color: #ffd700;
 }
 
+/* 👤 User Section in Navbar */
+.user-section {
+  position: absolute;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.user-name {
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-name::before {
+  content: "👤";
+  font-size: 1.1rem;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #00416a, #0077b6);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.6rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #005c97, #00416a);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 /* 🎛️ Dropdown Menu */
 .dropdown {
   position: relative;
@@ -472,6 +522,24 @@ footer {
     font-size: 0.9rem;
   }
 
+  .user-section {
+    right: 15px;
+    gap: 0.6rem;
+    flex-wrap: nowrap;
+  }
+
+  .user-name {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+  }
+
+  .logout-btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 1.2rem;
+    white-space: nowrap;
+  }
+
   .dropdown-menu {
     min-width: 180px;
   }
@@ -535,6 +603,21 @@ footer {
 
   .nav-links a {
     font-size: 0.8rem;
+  }
+
+  .user-section {
+    right: 10px;
+    gap: 0.5rem;
+  }
+
+  .user-name {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .logout-btn {
+    font-size: 0.75rem;
+    padding: 0.4rem 1rem;
   }
 
   .dropdown-menu {
@@ -1163,21 +1246,200 @@ footer {
   overflow: hidden;
 }
 
-.economic-calendar-iframe-container {
-  width: 100%;
-  height: 450px;
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
-  background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+/* Economic Calendar Card Styles */
+.fade-in-home {
+  animation: fadeInCard 0.6s ease-out;
 }
 
-.economic-calendar-iframe-container iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calendar-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fb 100%);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 65, 106, 0.1);
+  padding: 2.5rem;
+  margin: 2rem auto;
+  max-width: 1000px;
+  transition: box-shadow 0.3s ease;
+}
+
+.calendar-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 65, 106, 0.15);
+}
+
+.calendar-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e0f7fa;
+}
+
+.calendar-icon {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #00416a, #0077b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.calendar-header h2 {
+  color: #00416a;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.5px;
+}
+
+.calendar-subhead {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.calendar-card-inner {
+  padding: 0;
+}
+
+.economic-calendar-list {
+  min-height: 400px;
+}
+
+.calendar-loading {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.calendar-error {
+  text-align: center;
+  padding: 3rem;
+  color: #dc3545;
+  font-size: 1rem;
+}
+
+.calendar-events {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.calendar-event {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-left: 4px solid #0077b6;
+  transition: all 0.3s ease;
+}
+
+.calendar-event:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-left-color: #00416a;
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.event-country {
+  font-weight: 600;
+  color: #00416a;
+  font-size: 0.95rem;
+}
+
+.importance-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.importance-badge.high {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.importance-badge.medium {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.importance-badge.low {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.event-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.event-time {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.event-data {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.data-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.data-label {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.data-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.data-value.actual {
+  color: #00416a;
+}
+
+.data-value.forecast {
+  color: #0077b6;
+}
+
+.data-value.previous {
+  color: #666;
 }
 
 /* 📱 Responsive Economic Calendar */
@@ -1187,29 +1449,57 @@ footer {
     margin: 3rem auto;
   }
   
-  .economic-calendar-section h2 {
+  .calendar-card {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+  
+  .calendar-header {
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .calendar-header h2 {
     font-size: 1.5rem;
   }
   
-  .calendar-container {
-    padding: 1rem;
+  .calendar-subhead {
+    font-size: 0.9rem;
   }
   
-  .economic-calendar-iframe-container {
-    height: 400px;
+  .event-data {
+    grid-template-columns: 1fr;
+  }
+  
+  .calendar-event {
+    padding: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
-  .economic-calendar-section h2 {
+  .calendar-card {
+    padding: 1rem;
+    border-radius: 15px;
+  }
+  
+  .calendar-header h2 {
     font-size: 1.3rem;
   }
   
-  .calendar-container {
-    padding: 0.5rem;
+  .calendar-subhead {
+    font-size: 0.85rem;
   }
   
-  .economic-calendar-iframe-container {
-    height: 350px;
+  .event-title {
+    font-size: 1rem;
+  }
+  
+  .calendar-event {
+    padding: 1rem;
+  }
+  
+  .event-data {
+    gap: 0.8rem;
   }
 }

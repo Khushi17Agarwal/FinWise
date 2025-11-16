@@ -62,6 +62,8 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem("finwiseUser", JSON.stringify(data.user));
           } catch (_) {}
           document.getElementById("loginModal").style.display = "none";
+          // Update navbar to show user
+          updateNavbarForUser(data.user);
           // Redirect to home page
           window.location.href = "index.html";
         })
@@ -153,12 +155,71 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // Login button in navbar
-  const loginNavLink = document.querySelector('a[href="#"]');
-  if (loginNavLink && loginNavLink.textContent.trim() === "Login") {
+  const loginNavLink = document.getElementById("loginNavLink");
+  if (loginNavLink) {
     loginNavLink.addEventListener("click", function(e) {
       e.preventDefault();
       document.getElementById("loginModal").style.display = "block";
     });
+  }
+
+  // Function to update navbar based on user login status
+  function updateNavbarForUser(user) {
+    const userSection = document.getElementById("userSection");
+    const userName = document.getElementById("userName");
+    const loginNavLink = document.getElementById("loginNavLink");
+    
+    if (user && user.name) {
+      // User is logged in - show user section, hide login link
+      if (userSection) {
+        userSection.style.display = "flex";
+      }
+      if (userName) {
+        const firstName = user.name.split(" ")[0];
+        userName.textContent = firstName;
+      }
+      if (loginNavLink) {
+        loginNavLink.style.display = "none";
+      }
+    } else {
+      // User is not logged in - hide user section, show login link
+      if (userSection) {
+        userSection.style.display = "none";
+      }
+      if (loginNavLink) {
+        loginNavLink.style.display = "block";
+      }
+    }
+  }
+
+  // Logout functionality
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function() {
+      // Clear user data from localStorage
+      try {
+        localStorage.removeItem("finwiseUser");
+      } catch (_) {}
+      
+      // Update navbar
+      updateNavbarForUser(null);
+      
+      // Redirect to home page
+      window.location.href = "index.html";
+    });
+  }
+
+  // Check if user is logged in on page load
+  try {
+    const storedUser = localStorage.getItem("finwiseUser");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      updateNavbarForUser(user);
+    } else {
+      updateNavbarForUser(null);
+    }
+  } catch (_) {
+    updateNavbarForUser(null);
   }
 });
 
@@ -526,4 +587,211 @@ document.querySelectorAll('.dropdown-menu a').forEach(anchor => {
         // If it points to resources.html#section from another page, the browser's default
         // behavior (load new page then scroll to fragment) will handle it.
     });
+});
+
+// Economic Calendar Functionality
+document.addEventListener("DOMContentLoaded", function() {
+    const calendarList = document.getElementById("economic-calendar-list");
+    if (!calendarList) return;
+
+    // Function to format date
+    function formatDate(dateString) {
+        if (!dateString) return 'Date TBD';
+        try {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) {
+                return dateString; // Return original if invalid
+            }
+            return date.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+        } catch (e) {
+            return dateString;
+        }
+    }
+
+    // Function to get country flag emoji
+    function getCountryFlag(country) {
+        const flags = {
+            'US': '🇺🇸', 'United States': '🇺🇸', 'USA': '🇺🇸',
+            'GB': '🇬🇧', 'UK': '🇬🇧', 'United Kingdom': '🇬🇧',
+            'EU': '🇪🇺', 'Eurozone': '🇪🇺', 'EZ': '🇪🇺',
+            'DE': '🇩🇪', 'Germany': '🇩🇪',
+            'FR': '🇫🇷', 'France': '🇫🇷',
+            'JP': '🇯🇵', 'Japan': '🇯🇵',
+            'CN': '🇨🇳', 'China': '🇨🇳',
+            'IN': '🇮🇳', 'India': '🇮🇳',
+            'CA': '🇨🇦', 'Canada': '🇨🇦',
+            'AU': '🇦🇺', 'Australia': '🇦🇺',
+            'IT': '🇮🇹', 'Italy': '🇮🇹',
+            'ES': '🇪🇸', 'Spain': '🇪🇸',
+            'BR': '🇧🇷', 'Brazil': '🇧🇷',
+            'MX': '🇲🇽', 'Mexico': '🇲🇽',
+            'KR': '🇰🇷', 'South Korea': '🇰🇷',
+            'RU': '🇷🇺', 'Russia': '🇷🇺',
+            'CH': '🇨🇭', 'Switzerland': '🇨🇭',
+            'NL': '🇳🇱', 'Netherlands': '🇳🇱',
+            'SE': '🇸🇪', 'Sweden': '🇸🇪',
+            'NO': '🇳🇴', 'Norway': '🇳🇴'
+        };
+        return flags[country] || '🌍';
+    }
+
+    // Function to get importance badge
+    function getImportanceBadge(impact) {
+        if (!impact) return '';
+        const impactLower = String(impact).toLowerCase().trim();
+        if (impactLower === 'high' || impactLower === '3' || impactLower === 'high impact') {
+            return '<span class="importance-badge high">High</span>';
+        } else if (impactLower === 'medium' || impactLower === '2' || impactLower === 'medium impact') {
+            return '<span class="importance-badge medium">Medium</span>';
+        } else if (impactLower === 'low' || impactLower === '1' || impactLower === 'low impact') {
+            return '<span class="importance-badge low">Low</span>';
+        }
+        return '';
+    }
+
+    // Function to render events
+    function renderEvents(events) {
+        if (!events || events.length === 0) {
+            calendarList.innerHTML = '<div class="calendar-error">No economic events available at this time. Please check back later.</div>';
+            return;
+        }
+
+        let html = '<div class="calendar-events">';
+        // Sort events by date (most recent first) and take top 15
+        const sortedEvents = [...events].sort((a, b) => {
+            const dateA = new Date(a.date || a.timestamp || 0);
+            const dateB = new Date(b.date || b.timestamp || 0);
+            return dateB - dateA;
+        }).slice(0, 15);
+        
+        sortedEvents.forEach(event => {
+            // Financial Modeling Prep API fields: event, country, date, estimate, actual, previous, impact
+            const country = event.country || 'US';
+            const flag = getCountryFlag(country);
+            const importance = getImportanceBadge(event.impact || event.importance);
+            const actual = event.actual !== null && event.actual !== undefined ? event.actual : 'N/A';
+            const forecast = event.estimate !== null && event.estimate !== undefined ? event.estimate : 'N/A';
+            const previous = event.previous !== null && event.previous !== undefined ? event.previous : 'N/A';
+            const eventName = event.event || event.name || 'Economic Event';
+            const eventDate = event.date || event.timestamp;
+            
+            html += `
+                <div class="calendar-event">
+                    <div class="event-header">
+                        <div class="event-country">${flag} ${country}</div>
+                        ${importance}
+                    </div>
+                    <div class="event-title">${eventName}</div>
+                    <div class="event-time">${formatDate(eventDate)}</div>
+                    <div class="event-data">
+                        <div class="data-item">
+                            <span class="data-label">Actual:</span>
+                            <span class="data-value actual">${actual}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Forecast:</span>
+                            <span class="data-value forecast">${forecast}</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Previous:</span>
+                            <span class="data-value previous">${previous}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        calendarList.innerHTML = html;
+    }
+
+    // Fetch economic calendar data from backend proxy
+    async function fetchEconomicCalendar() {
+        try {
+            // Call our backend proxy endpoint
+            const response = await fetch('/api/economic-calendar', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                if (result.ok && Array.isArray(result.events)) {
+                    renderEvents(result.events);
+                } else {
+                    throw new Error(result.message || 'Invalid data format');
+                }
+            } else {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'API request failed');
+            }
+        } catch (error) {
+            console.error('Error fetching economic calendar:', error);
+            // Fallback: Show sample data if backend fails
+            renderSampleEvents();
+        }
+    }
+
+    // Fallback: Render sample events if API fails
+    function renderSampleEvents() {
+        const sampleEvents = [
+            {
+                country: 'US',
+                event: 'GDP Growth Rate',
+                date: new Date().toISOString(),
+                actual: '2.1%',
+                estimate: '2.0%',
+                previous: '1.9%',
+                impact: 'High'
+            },
+            {
+                country: 'EU',
+                event: 'Inflation Rate',
+                date: new Date(Date.now() + 86400000).toISOString(),
+                actual: '2.5%',
+                estimate: '2.4%',
+                previous: '2.3%',
+                impact: 'High'
+            },
+            {
+                country: 'UK',
+                event: 'Unemployment Rate',
+                date: new Date(Date.now() + 172800000).toISOString(),
+                actual: '3.8%',
+                estimate: '3.9%',
+                previous: '3.8%',
+                impact: 'Medium'
+            },
+            {
+                country: 'JP',
+                event: 'Interest Rate Decision',
+                date: new Date(Date.now() + 259200000).toISOString(),
+                actual: '0.10%',
+                estimate: '0.10%',
+                previous: '0.10%',
+                impact: 'High'
+            },
+            {
+                country: 'CN',
+                event: 'Manufacturing PMI',
+                date: new Date(Date.now() + 345600000).toISOString(),
+                actual: '50.2',
+                estimate: '50.0',
+                previous: '49.8',
+                impact: 'Medium'
+            }
+        ];
+        renderEvents(sampleEvents);
+    }
+
+    // Load events on page load
+    fetchEconomicCalendar();
 });

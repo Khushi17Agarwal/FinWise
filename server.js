@@ -73,6 +73,87 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Economic Calendar Proxy Endpoint
+app.get('/api/economic-calendar', async (req, res) => {
+  try {
+    const today = new Date();
+    const nextWeek = new Date(today);
+    nextWeek.setDate(nextWeek.getDate() + 7);
+    
+    const fromDate = today.toISOString().split('T')[0];
+    const toDate = nextWeek.toISOString().split('T')[0];
+
+    const apiKey = process.env.FMP_API_KEY || 'SyH64DFoPAlxsQALxLryFk5LvOyeUQuX';
+    const apiUrl = `https://financialmodelingprep.com/api/v3/economic_calendar?from=${fromDate}&to=${toDate}&apikey=${apiKey}`;
+    console.log(`📅 Date range: ${fromDate} to ${toDate}`);
+    const nodeFetch = require('node-fetch');
+    console.log(`📡 Fetching economic calendar from: ${apiUrl.replace(apiKey, 'API_KEY_HIDDEN')}`);
+    let lastError = null;
+    let response = await nodeFetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'FinWise/1.0'
+      }
+    });
+    let responseText = await response.text();
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (e) {
+      data = { error: responseText };
+    }
+    if (response.ok && Array.isArray(data) && data.length > 0) {
+      console.log(`✅ Fetched ${data.length} economic events`);
+      return res.json({ ok: true, events: data });
+    } else {
+      const errorMsg = data && (data['Error Message'] || data.error || data.message) || `HTTP ${response.status}`;
+      lastError = `FMP: ${errorMsg}`;
+    }
+
+    const teUrl = `https://api.tradingeconomics.com/calendar?c=guest:guest&format=json&d1=${fromDate}&d2=${toDate}`;
+    console.log(`📡 Fetching economic calendar fallback from: ${teUrl}`);
+    const teRes = await nodeFetch(teUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'FinWise/1.0'
+      }
+    });
+    const teText = await teRes.text();
+    let teData;
+    try {
+      teData = JSON.parse(teText);
+    } catch (e) {
+      teData = { error: teText };
+    }
+    if (teRes.ok && Array.isArray(teData) && teData.length > 0) {
+      const events = teData.map(item => ({
+        country: item.Country || 'US',
+        event: item.Event || item.Category || 'Economic Event',
+        date: item.Date || item.Timestamp || null,
+        estimate: item.Forecast !== undefined ? item.Forecast : item.Estimate,
+        actual: item.Actual !== undefined ? item.Actual : null,
+        previous: item.Previous !== undefined ? item.Previous : null,
+        impact: item.Importance || null
+      }));
+      console.log(`✅ Fallback fetched ${events.length} economic events`);
+      return res.json({ ok: true, events });
+    } else {
+      const teErr = teData && (teData.error || teData.message) || `HTTP ${teRes.status}`;
+      const message = lastError ? `${lastError}; TE: ${teErr}` : `TE: ${teErr}`;
+      return res.status(502).json({ ok: false, message });
+    }
+  } catch (err) {
+    console.error('Economic calendar proxy error:', err.message);
+    return res.status(500).json({ 
+      ok: false, 
+      message: 'Failed to fetch economic calendar data',
+      error: err.message 
+    });
+  }
+});
+
 // Serve static frontend (same origin)
 const staticDir = path.join(__dirname);
 app.use(express.static(staticDir));
@@ -82,8 +163,22 @@ app.get('/', (_req, res) => {
   res.sendFile(path.join(staticDir, 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
-});
+function startServer(p, tries = 0) {
+  const server = app.listen(p, () => {
+    console.log(`🚀 Server running at http://localhost:${p}`);
+  });
+  server.on('error', (err) => {
+    if (err && err.code === 'EADDRINUSE' && tries < 10) {
+      const next = p + 1;
+      console.log(`⚠️  Port ${p} in use, retrying on ${next}`);
+      startServer(next, tries + 1);
+    } else {
+      console.error('Server start error:', err && err.message ? err.message : err);
+      process.exit(1);
+    }
+  });
+}
+
+startServer(PORT);
 
 

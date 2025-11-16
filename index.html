@@ -12,7 +12,7 @@
       <div class="logo">FinWise</div>
       <ul class="nav-links">
         <li><a href="index.html" class="active-link">Home</a></li>
-        <li><a href="#">Login</a></li>
+        <li><a href="#" id="loginNavLink">Login</a></li>
         <li><a href="news.html">News</a></li>
         <li class="dropdown">
           <a href="resources.html">Resources</a>
@@ -24,6 +24,10 @@
           </div>
         </li>
       </ul>
+      <div class="user-section" id="userSection" style="display: none;">
+        <span class="user-name" id="userName"></span>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+      </div>
     </nav>
   </header>
 
@@ -32,28 +36,26 @@
     <p>Your trusted guide to Financial Literacy.</p>
     <p style="margin-top: 2rem; color: #666;">Learn the fundamentals of personal finance, investment strategies, and smart money management.</p>
     
-    <!-- Economic Calendar Section -->
-    <section class="economic-calendar-section">
-      <h2>📅 Economic Calendar</h2>
-      <p style="margin-bottom: 2rem; color: #666;">Stay updated with important economic events and announcements that can impact financial markets.</p>
-      <div class="calendar-container">
-        <!-- Investing.com Economic Calendar -->
-        <div class="economic-calendar-iframe-container">
-          <iframe 
-            src="https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,6,37,17,39,14,10,35&calType=week&timeZone=8&lang=1" 
-            width="100%" 
-            height="450" 
-            frameborder="0" 
-            scrolling="no"
-            allowtransparency="true"
-            style="border-radius: 10px; overflow: hidden;">
-          </iframe>
-        </div>
-        <p style="text-align: center; margin-top: 1rem; font-size: 0.85rem; color: #666;">
-          Economic calendar provided by <a href="https://www.investing.com" target="_blank" rel="noopener" style="color: #0077b6;">Investing.com</a>
+   <!-- Economic Calendar Section -->
+<section class="economic-calendar-section fade-in-home">
+  <div class="calendar-card">
+    <div class="calendar-header">
+      <span class="calendar-icon">📅</span>
+      <div>
+        <h2>Economic Calendar</h2>
+        <p class="calendar-subhead">
+          <!-- Real-time global economic events and indicators.<br>
+          Data by <a href="https://financialmodelingprep.com/developer/docs/economic-calendar-free-api/" target="_blank" rel="noopener" style="color:#0077b6;">Financial Modeling Prep</a>. -->
         </p>
       </div>
-    </section>
+    </div>
+    <div class="calendar-card-inner">
+      <div id="economic-calendar-list" class="economic-calendar-list">
+        <div class="calendar-loading">Loading events...</div>
+      </div>
+    </div>
+  </div>
+</section>
   </main>
 
   <footer>

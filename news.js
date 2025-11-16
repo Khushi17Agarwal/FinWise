@@ -2,22 +2,37 @@ const container = document.getElementById("news-container");
 
 // ✅ Using your NewsAPI key
 const API_KEY = "886c98cf66ee4ad8a577cffdcd20c24e";
-const API_URL = `https://newsapi.org/v2/everything?q=finance%20OR%20investment%20OR%20stock%20market&language=en&sortBy=publishedAt&pageSize=10&apiKey=${API_KEY}`;
+const API_URL = `https://newsapi.org/v2/top-headlines?category=business&country=us&q=stock%20OR%20market%20OR%20finance%20OR%20economy&pageSize=10&apiKey=${API_KEY}`;
 
 async function fetchFinancialNews() {
   try {
-    const response = await fetch(API_URL);
-    if (!response.ok) throw new Error("Network issue");
+    const lookback = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();
+    const urls = [
+      API_URL,
+      `https://newsapi.org/v2/everything?q=finance%20OR%20stock%20OR%20market%20OR%20economy&language=en&sortBy=publishedAt&from=${lookback}&pageSize=20&apiKey=${API_KEY}`,
+      `https://newsapi.org/v2/top-headlines?category=business&language=en&pageSize=10&apiKey=${API_KEY}`,
+      `https://newsapi.org/v2/everything?q=finance%20OR%20stock%20OR%20market%20OR%20economy&language=en&sortBy=publishedAt&pageSize=20&apiKey=${API_KEY}`
+    ];
 
-    const data = await response.json();
+    let articles = [];
+    for (const url of urls) {
+      const res = await fetch(url);
+      if (!res.ok) continue;
+      const json = await res.json();
+      if (json && Array.isArray(json.articles) && json.articles.length > 0) {
+        articles = json.articles;
+        break;
+      }
+    }
+
     container.innerHTML = "";
 
-    if (!data.articles || data.articles.length === 0) {
+    if (articles.length === 0) {
       container.innerHTML = `<p style="text-align:center;">No financial news available at the moment.</p>`;
       return;
     }
 
-    data.articles.forEach(article => {
+    articles.forEach(article => {
       const card = document.createElement("div");
       card.classList.add("news-card");
 
@@ -85,6 +100,8 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem("finwiseUser", JSON.stringify(data.user));
           } catch (_) {}
           document.getElementById("loginModal").style.display = "none";
+          // Update navbar to show user
+          updateNavbarForUser(data.user);
           // Redirect to home page
           window.location.href = "index.html";
         })
@@ -174,12 +191,71 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // Login button in navbar
-  const loginNavLink = document.querySelector('a[href="#"]');
-  if (loginNavLink && loginNavLink.textContent.trim() === "Login") {
+  const loginNavLink = document.getElementById("loginNavLink");
+  if (loginNavLink) {
     loginNavLink.addEventListener("click", function(e) {
       e.preventDefault();
       document.getElementById("loginModal").style.display = "block";
     });
+  }
+
+  // Function to update navbar based on user login status
+  function updateNavbarForUser(user) {
+    const userSection = document.getElementById("userSection");
+    const userName = document.getElementById("userName");
+    const loginNavLink = document.getElementById("loginNavLink");
+    
+    if (user && user.name) {
+      // User is logged in - show user section, hide login link
+      if (userSection) {
+        userSection.style.display = "flex";
+      }
+      if (userName) {
+        const firstName = user.name.split(" ")[0];
+        userName.textContent = firstName;
+      }
+      if (loginNavLink) {
+        loginNavLink.style.display = "none";
+      }
+    } else {
+      // User is not logged in - hide user section, show login link
+      if (userSection) {
+        userSection.style.display = "none";
+      }
+      if (loginNavLink) {
+        loginNavLink.style.display = "block";
+      }
+    }
+  }
+
+  // Logout functionality
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function() {
+      // Clear user data from localStorage
+      try {
+        localStorage.removeItem("finwiseUser");
+      } catch (_) {}
+      
+      // Update navbar
+      updateNavbarForUser(null);
+      
+      // Redirect to home page
+      window.location.href = "index.html";
+    });
+  }
+
+  // Check if user is logged in on page load
+  try {
+    const storedUser = localStorage.getItem("finwiseUser");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      updateNavbarForUser(user);
+    } else {
+      updateNavbarForUser(null);
+    }
+  } catch (_) {
+    updateNavbarForUser(null);
   }
 
   // Modal functionality
