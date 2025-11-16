@@ -39,39 +39,21 @@ document.addEventListener("DOMContentLoaded", function() {
       e.preventDefault();
       const email = document.getElementById("loginEmail").value;
       const password = document.getElementById("loginPassword").value;
-
-      if (!email || !password) return;
-
-      const loginBtn = this.querySelector(".auth-btn");
-      loginBtn.textContent = "Logging in...";
-      loginBtn.disabled = true;
-
-      fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      })
-        .then(async (res) => {
-          const data = await res.json().catch(() => ({}));
-          if (!res.ok || !data.ok) {
-            const msg = data.message || "Login failed";
-            throw new Error(msg);
-          }
-          // Persist minimal session indicator
-          try {
-            localStorage.setItem("finwiseUser", JSON.stringify(data.user));
-          } catch (_) {}
+      
+      if (email && password) {
+        // Simulate login process
+        const loginBtn = this.querySelector(".auth-btn");
+        loginBtn.textContent = "Logging in...";
+        loginBtn.disabled = true;
+        
+        setTimeout(() => {
+          alert("Welcome back to FinWise! 🎉");
           document.getElementById("loginModal").style.display = "none";
-          // Redirect to home page
-          window.location.href = "index.html";
-        })
-        .catch((err) => {
-          alert(err.message || "Unable to login. Please try again.");
-        })
-        .finally(() => {
           loginBtn.textContent = "Login";
           loginBtn.disabled = false;
-        });
+          loginForm.reset();
+        }, 1500);
+      }
     });
   }
 
@@ -96,39 +78,21 @@ document.addEventListener("DOMContentLoaded", function() {
         alert("Please agree to the Terms of Service and Privacy Policy.");
         return;
       }
-
-      if (!(name && email && password && ageRange)) return;
-
-      const signupBtn = this.querySelector(".auth-btn");
-      signupBtn.textContent = "Creating Account...";
-      signupBtn.disabled = true;
-
-      fetch("/api/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password })
-      })
-        .then(async (res) => {
-          const data = await res.json().catch(() => ({}));
-          if (!res.ok || !data.ok) {
-            const msg = data.message || "Signup failed";
-            throw new Error(msg);
-          }
+      
+      if (name && email && password && ageRange) {
+        // Simulate signup process
+        const signupBtn = this.querySelector(".auth-btn");
+        signupBtn.textContent = "Creating Account...";
+        signupBtn.disabled = true;
+        
+        setTimeout(() => {
           alert(`Welcome to FinWise, ${name}! 🎉 Your account has been created successfully.`);
           document.getElementById("signupModal").style.display = "none";
-          // Optionally auto-fill login email
-          const loginEmail = document.getElementById("loginEmail");
-          if (loginEmail) loginEmail.value = email;
-          // Show login modal
-          document.getElementById("loginModal").style.display = "block";
-        })
-        .catch((err) => {
-          alert(err.message || "Unable to sign up. Please try again.");
-        })
-        .finally(() => {
           signupBtn.textContent = "Create Account";
           signupBtn.disabled = false;
-        });
+          signupForm.reset();
+        }, 2000);
+      }
     });
   }
 
@@ -148,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
     showLoginLink.addEventListener("click", function(e) {
       e.preventDefault();
       document.getElementById("signupModal").style.display = "none";
-      document.getElementById("loginModal").style.display = "block";
+      document.getElementById("loginModal").style.display = "block";1
     });
   }
 
@@ -202,8 +166,7 @@ window.addEventListener("click", function(event) {
 });
 
 // Budget Calculator functionality
-const calculateBudgetBtn = document.getElementById("calculateBudget");
-if (calculateBudgetBtn) calculateBudgetBtn.addEventListener("click", function() {
+document.getElementById("calculateBudget").addEventListener("click", function() {
   const income = parseFloat(document.getElementById("monthlyIncome").value) || 0;
   const housing = parseFloat(document.getElementById("housing").value) || 0;
   const utilities = parseFloat(document.getElementById("utilities").value) || 0;
@@ -234,8 +197,7 @@ if (calculateBudgetBtn) calculateBudgetBtn.addEventListener("click", function() 
 });
 
 // Investment Calculator functionality
-const calculateInvestmentBtn = document.getElementById("calculateInvestment");
-if (calculateInvestmentBtn) calculateInvestmentBtn.addEventListener("click", function() {
+document.getElementById("calculateInvestment").addEventListener("click", function() {
   const initialAmount = parseFloat(document.getElementById("initialAmount").value) || 0;
   const monthlyContribution = parseFloat(document.getElementById("monthlyContribution").value) || 0;
   const annualReturn = parseFloat(document.getElementById("annualReturn").value) || 0;
@@ -269,8 +231,7 @@ if (calculateInvestmentBtn) calculateInvestmentBtn.addEventListener("click", fun
 });
 
 // Financial Goal Planner functionality
-const calculateGoalBtn = document.getElementById("calculateGoal");
-if (calculateGoalBtn) calculateGoalBtn.addEventListener("click", function() {
+document.getElementById("calculateGoal").addEventListener("click", function() {
   const goalName = document.getElementById("goalName").value || "Financial Goal";
   const goalAmount = parseFloat(document.getElementById("goalAmount").value) || 0;
   const currentSavings = parseFloat(document.getElementById("currentSavings").value) || 0;
@@ -302,8 +263,7 @@ if (calculateGoalBtn) calculateGoalBtn.addEventListener("click", function() {
 });
 
 // Debt Calculator functionality
-const calculateDebtBtn = document.getElementById("calculateDebt");
-if (calculateDebtBtn) calculateDebtBtn.addEventListener("click", function() {
+document.getElementById("calculateDebt").addEventListener("click", function() {
   const debtAmount = parseFloat(document.getElementById("debtAmount").value) || 0;
   const interestRate = parseFloat(document.getElementById("interestRate").value) || 0;
   const monthlyPayment = parseFloat(document.getElementById("monthlyPayment").value) || 0;
